@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: 'SKHUni',
@@ -14,10 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col pt-[64px]">
         <Header />
-        <main className="flex-grow">{children}</main>
-        {/* <Footer /> */}
+        <main className="mt-[64px] min-h-[calc(100vh-160px)]">{children}</main>
+        <Footer />
       </body>
     </html>
   );
