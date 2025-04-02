@@ -28,7 +28,9 @@ jobs:
         run: |
           rm -rf output
           mkdir output
-          cp -r .next public package.json next.config.js output/
+          if [ -d "public" ]; then cp -r public output/; fi
+          if [ -d ".next" ]; then cp -r .next output/; fi
+          cp package.json next.config.ts output/
 
       - name: Push to personal repo
         uses: cpina/github-action-push-to-another-repository@main
