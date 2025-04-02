@@ -3,6 +3,9 @@ module.exports = {
   content: ['./src/**/*.{ts,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"Pretendard Variable"', 'sans-serif'],
+      },
       colors: {
         primary: '#512DA8',
         primaryLight: '#B39DDB',
