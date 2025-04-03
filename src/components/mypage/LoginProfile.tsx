@@ -19,7 +19,7 @@ export const LoginProfile = () => {
           </div>
           <div className="flex gap-2 items-center">
             <Image src="/assets/icons/user-check.svg" alt="userCheck" width={16} height={17} />
-            <p className="text-sm leading-none text-gray-700">인증된 유저</p>
+            <p className="text-sm font-bold leading-none text-gray-700">인증된 유저</p>
           </div>
         </div>
       </div>
