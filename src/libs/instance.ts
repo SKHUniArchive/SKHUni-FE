@@ -1,4 +1,5 @@
 // src/lib/instance.ts
+import { refreshAccessToken } from '@/apis/auth';
 import { useAuthStore } from '@/store/useAuthStore';
 import axios from 'axios';
 
@@ -21,4 +22,34 @@ instance.interceptors.request.use(
   }
 );
 
+instance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    // accessToken 만료로 401 응답이 왔다면,
+    if (
+      error.response.status === 401 &&
+      !originalRequest._retry &&
+      useAuthStore.getState().refreshToken
+    ) {
+      originalRequest._retry = true;
+      try {
+        const { accessToken } = await refreshAccessToken();
+        useAuthStore
+          .getState()
+          .setTokens({ accessToken, refreshToken: useAuthStore.getState().refreshToken! });
+
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        return instance(originalRequest);
+      } catch (error) {
+        console.log('refreshToken 재발급 실패');
+        useAuthStore.getState().clearTokens();
+        window.location.href = '/login';
+        return Promise.reject(error);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 export default instance;
