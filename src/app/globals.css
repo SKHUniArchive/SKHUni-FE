@@ -27,21 +27,9 @@ a {
   text-decoration: none;
 }
 
-input,
-textarea,
-select {
-  font: inherit;
-  color: inherit;
-  background: none;
-  border: none;
-  outline: none;
-}
-
 ul,
 ol {
   list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
 body,
