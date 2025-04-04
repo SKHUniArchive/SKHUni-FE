@@ -1,5 +1,28 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { MarkdownPreview } from './MarkdownPreview';
+
+const mockMarkdown = `
+  ## ✨ 자기소개
+
+안녕하세요! 프론트엔드 개발자 **홍길동**입니다.  
+좋아하는 기술 스택은 \`React\`, \`Next.js\`, \`TypeScript\`입니다.
+
+---
+
+### 💡 관심 분야
+
+- UI/UX 개선
+- 디자인 시스템 구축
+- 퍼포먼스 최적화
+
+---
+
+### 📫 연락처
+
+- 이메일: honggildong@example.com
+- GitHub: [https://github.com/honggildong](https://github.com/honggildong)
+`;
 
 export const MyProfile = () => {
   return (
@@ -48,10 +71,7 @@ export const MyProfile = () => {
       <div className="flex flex-col gap-2">
         <h3 className="text-lg font-semibold text-gray-900">자기소개</h3>
         {/* 나중에 마크다운 뷰 들어갈 예정 */}
-        <p className="text-sm text-gray-500">
-          한 줄 소개는 다음과 같습니다. 한 줄 소개는 다음과 같습니다. 한 줄 소개는 다음과 같습니다.
-          한 줄 소개는 다음과 같습니다. 한 줄 소개는 다음과 같습니다.
-        </p>
+        <MarkdownPreview content={mockMarkdown} />
       </div>
       <div className="flex flex-col gap-2">
         <h3 className="text-lg font-semibold text-gray-900">기술 스택</h3>

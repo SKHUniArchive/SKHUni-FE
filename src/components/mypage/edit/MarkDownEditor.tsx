@@ -1,7 +1,7 @@
 import { MdEditor, config } from 'md-editor-rt';
 import { useState } from 'react';
 import ko_KR from '@vavt/cm-extension/dist/locale/ko-KR';
-import '@vavt/cm-extension/dist/previewTheme/arknights.css';
+import 'md-editor-rt/lib/style.css';
 
 export const MarkDownEditor = () => {
   const [text, setText] = useState('');
