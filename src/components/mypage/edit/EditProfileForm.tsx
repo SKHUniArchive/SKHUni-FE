@@ -8,11 +8,12 @@ import { useState } from 'react';
 import { LinkAdd } from './LinkAdd';
 import TechStackSelector from './TechStackSelector';
 import { STACKS_WITH_NAMES } from '@/types/stacks';
+import 'md-editor-rt/lib/style.css';
+import { MarkDownEditor } from './MarkDownEditor';
 export const EditProfileForm = () => {
   const [selected, setSelected] = useState('');
   const [selectedField, setSelectedField] = useState('');
   const [selectedStacks, setSelectedStacks] = useState<string[]>([]);
-
   return (
     <form className="flex flex-col gap-6">
       <div className="flex justify-between">
@@ -76,6 +77,11 @@ export const EditProfileForm = () => {
           id="introduction"
           placeholder="소개를 입력해주세요"
         />
+        <div className="flex flex-col gap-1">
+          <label className="text-xs text-gray-700">자기소개</label>
+          <MarkDownEditor />
+        </div>
+
         <TechStackSelector
           stackList={STACKS_WITH_NAMES.map((stack) => stack.name)}
           value={selectedStacks}
