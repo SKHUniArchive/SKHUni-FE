@@ -26,7 +26,6 @@ export default function MyPage() {
       </div>
       <hr className="border-gray-300" />
       <div className="flex flex-col gap-6">
-        {/* 추후 권한 관련 api 생기면 권한 확인 후 버튼 보여주기 */}
         {role === 'ROLE_USER' && (
           <div className="flex flex-col gap-4 justify-center items-center">
             <p className="text-base text-gray-700">
