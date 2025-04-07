@@ -30,7 +30,7 @@ export default function MemberDetailLayout() {
   return (
     <section className="flex flex-col w-[60rem] justify-center mx-auto mt-8 gap-16">
       <MemberBasicInfo member={member} />
-      <MemberDetailTabs />
+      <MemberDetailTabs member={member} />
     </section>
   );
 }

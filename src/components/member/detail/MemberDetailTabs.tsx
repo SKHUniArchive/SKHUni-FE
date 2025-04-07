@@ -2,7 +2,11 @@
 
 import { useState } from 'react';
 import { MemberIntroduction } from './MemberIntroduction';
-export const MemberDetailTabs = () => {
+import { UserInfo } from '@/types/users';
+interface MemberDetailTabsProps {
+  member: UserInfo;
+}
+export const MemberDetailTabs = ({ member }: MemberDetailTabsProps) => {
   const [selectedTab, setSelectedTab] = useState<'self-introduction' | 'project'>(
     'self-introduction'
   );
@@ -32,7 +36,9 @@ export const MemberDetailTabs = () => {
           프로젝트
         </button>
       </div>
-      {selectedTab === 'self-introduction' && <MemberIntroduction />}
+      {selectedTab === 'self-introduction' && (
+        <MemberIntroduction introduction={member.introduction} />
+      )}
       {selectedTab === 'project' && <div>프로젝트</div>}
     </div>
   );
