@@ -32,7 +32,7 @@ export const MyProfile = ({ userInfo }: MyProfileProps) => {
           alt="profile"
           width={120}
           height={120}
-          className="overflow-hidden rounded-full"
+          className="object-cover w-24 h-24 rounded-full"
         />
         <div className="flex justify-between w-[400px]">
           <div className="flex flex-col gap-2">
