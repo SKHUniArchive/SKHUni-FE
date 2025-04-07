@@ -44,3 +44,9 @@ export const getMemberList = async (
   const response = await instance.get(`/api/members?${queryParams.toString()}`);
   return response.data;
 };
+
+// 멤버 상세 조회
+export const getMemberDetail = async (memberId: number) => {
+  const response = await instance.get(`/api/members/${memberId}`);
+  return response.data;
+};
