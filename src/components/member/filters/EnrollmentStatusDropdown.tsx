@@ -1,16 +1,15 @@
 'use client';
-
 import { useState, useRef, useEffect } from 'react';
-import { Field } from '@/types/users';
-import { FIELD_LABELS } from '@/constants/labels';
+import { EnrollmentStatus } from '@/types/users';
+import { ENROLLMENT_STATUS_LABELS } from '@/constants/labels';
 import Image from 'next/image';
 
-interface FieldDropdownProps {
-  selected: Field | undefined;
-  onSelect: (field: Field | undefined) => void;
+interface EnrollmentStatusDropdownProps {
+  selected: EnrollmentStatus | undefined;
+  onSelect: (status: EnrollmentStatus | undefined) => void;
 }
 
-const FieldDropdown = ({ selected, onSelect }: FieldDropdownProps) => {
+const EnrollmentStatusDropdown = ({ selected, onSelect }: EnrollmentStatusDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -27,8 +26,8 @@ const FieldDropdown = ({ selected, onSelect }: FieldDropdownProps) => {
     };
   }, []);
 
-  const handleSelect = (field: Field | undefined) => {
-    onSelect(field);
+  const handleSelect = (status: EnrollmentStatus | undefined) => {
+    onSelect(status);
     setIsOpen(false);
   };
 
@@ -38,7 +37,7 @@ const FieldDropdown = ({ selected, onSelect }: FieldDropdownProps) => {
         className="w-[8rem] flex justify-between items-center px-4 py-2 text-sm rounded-md border border-gray-300"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span>{selected ? FIELD_LABELS[selected] : '분야'}</span>
+        <span>{selected ? ENROLLMENT_STATUS_LABELS[selected] : '재학 상태'}</span>
         <Image
           src="/assets/icons/chevronDown.svg"
           alt="dropdown"
@@ -55,11 +54,11 @@ const FieldDropdown = ({ selected, onSelect }: FieldDropdownProps) => {
           >
             전체
           </div>
-          {Object.entries(FIELD_LABELS).map(([key, label]) => (
+          {Object.entries(ENROLLMENT_STATUS_LABELS).map(([key, label]) => (
             <div
               key={key}
               className="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
-              onClick={() => handleSelect(key as Field)}
+              onClick={() => handleSelect(key as EnrollmentStatus)}
             >
               {label}
             </div>
@@ -70,4 +69,4 @@ const FieldDropdown = ({ selected, onSelect }: FieldDropdownProps) => {
   );
 };
 
-export default FieldDropdown;
+export default EnrollmentStatusDropdown;
