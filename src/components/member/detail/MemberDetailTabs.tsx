@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-
+import { MemberIntroduction } from './MemberIntroduction';
 export const MemberDetailTabs = () => {
   const [selectedTab, setSelectedTab] = useState<'self-introduction' | 'project'>(
     'self-introduction'
@@ -32,7 +32,7 @@ export const MemberDetailTabs = () => {
           프로젝트
         </button>
       </div>
-      {selectedTab === 'self-introduction' && <div>자기소개</div>}
+      {selectedTab === 'self-introduction' && <MemberIntroduction />}
       {selectedTab === 'project' && <div>프로젝트</div>}
     </div>
   );

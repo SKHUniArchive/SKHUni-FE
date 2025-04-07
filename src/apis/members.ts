@@ -50,3 +50,26 @@ export const getMemberDetail = async (memberId: number) => {
   const response = await instance.get(`/api/members/${memberId}`);
   return response.data;
 };
+
+// 커피챗 요청
+export const requestCoffeeChat = async (toMemberId: number, content: string) => {
+  const response = await instance.post(`/api/members/request/coffee-chat`, {
+    toMemberId,
+    content,
+  });
+  return response.data;
+};
+
+// 코드리뷰 요청
+export const requestCodeReview = async (
+  toMemberId: number,
+  content: string,
+  githubLink?: string
+) => {
+  const response = await instance.post(`/api/members/request/code-review`, {
+    toMemberId,
+    content,
+    githubLink,
+  });
+  return response.data;
+};

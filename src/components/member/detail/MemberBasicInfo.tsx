@@ -4,9 +4,13 @@ import { EnrollmentStatus, UserInfo } from '@/types/users';
 import { ENROLLMENT_STATUS_LABELS, FIELD_LABELS } from '@/constants/labels';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { AbleBadge } from '@/components/common/AbleBadge';
+import { RequestModal } from './RequestModal';
 export default function MemberBasicInfo({ member }: { member: UserInfo }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<'커피챗 요청' | '코드리뷰 요청' | null>(
+    null
+  );
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -27,7 +31,7 @@ export default function MemberBasicInfo({ member }: { member: UserInfo }) {
     ) {
       return;
     }
-    setSelectedOption(option);
+    setSelectedOption(option as '커피챗 요청' | '코드리뷰 요청');
     setIsOpen(false);
   };
 
@@ -57,6 +61,10 @@ export default function MemberBasicInfo({ member }: { member: UserInfo }) {
           <p className="text-sm text-gray-500 line-clamp-2">
             {member.introLine || '한줄소개가 없습니다'}
           </p>
+          <div className="flex gap-2">
+            <AbleBadge able={member.coffeeChatOpen} type="coffee" />
+            <AbleBadge able={member.codeReviewOpen} type="code" />
+          </div>
         </div>
       </div>
       <div className="relative" ref={dropdownRef}>
@@ -80,7 +88,7 @@ export default function MemberBasicInfo({ member }: { member: UserInfo }) {
                     type="button"
                     disabled={isDisabled}
                     onClick={() => handleSelect(option)}
-                    className={`px-4 py-2 text-sm rounded-lg ${
+                    className={`w-full text-left px-4 py-2 text-sm rounded-lg ${
                       isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
                     } ${
                       isDisabled
@@ -96,6 +104,13 @@ export default function MemberBasicInfo({ member }: { member: UserInfo }) {
           </ul>
         )}
       </div>
+      {selectedOption && (
+        <RequestModal
+          type={selectedOption}
+          onClose={() => setSelectedOption(null)}
+          toMemberId={member.memberId}
+        />
+      )}
     </div>
   );
 }
