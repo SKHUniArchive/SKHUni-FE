@@ -2,46 +2,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { MarkdownPreview } from './MarkdownPreview';
-import { getUserInfo } from '@/apis/members';
-import { useEffect, useState } from 'react';
-import { Field, FIELD_LABELS } from '@/constants/fields';
-import { EnrollmentStatus, ENROLLMENT_STATUS_LABELS } from '@/constants/enrollment';
+import { UserInfo } from '@/types/users';
+import { Field, EnrollmentStatus } from '@/types/users';
+import { ENROLLMENT_STATUS_LABELS, FIELD_LABELS } from '@/constants/labels';
 
-interface UserInfo {
-  email: string;
-  name: string;
-  picture: string;
-  contactEmail: string;
-  studentId: string;
-  introLine: string;
-  introduction: string;
-  enrollmentStatus: EnrollmentStatus;
-  fieldType: Field;
-  techStack: string;
-  coffeeChatOpen: boolean;
-  codeReviewOpen: boolean;
-  notion: string;
-  github: string;
-  linkedIn: string;
-  etc1: string;
-  etc2: string;
+interface MyProfileProps {
+  userInfo: UserInfo | null;
 }
 
-export const MyProfile = () => {
-  const [userInfo, setUserInfo] = useState<UserInfo>();
-  const fetchUserInfo = async () => {
-    try {
-      const response = await getUserInfo();
-      setUserInfo(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
-
+export const MyProfile = ({ userInfo }: MyProfileProps) => {
   const socialLinks = [
     { key: 'github', label: 'Github', icon: '/assets/icons/github.svg', url: userInfo?.github },
     {
@@ -59,7 +28,7 @@ export const MyProfile = () => {
     <div className="flex flex-col gap-10 justify-between">
       <div className="flex gap-8">
         <img
-          src={userInfo?.picture}
+          src={userInfo?.picture ?? '/assets/img/profile.png'}
           alt="profile"
           width={120}
           height={120}
@@ -76,7 +45,7 @@ export const MyProfile = () => {
               <div className="flex gap-2 items-center">
                 <Image src="/assets/icons/school.svg" alt="학번" width={16} height={16} />
                 <h6 className="text-sm font-normal leading-none text-gray-700">
-                  {userInfo?.studentId} (
+                  {userInfo?.studentId}학번 (
                   {
                     ENROLLMENT_STATUS_LABELS[
                       userInfo?.enrollmentStatus ?? EnrollmentStatus.ENROLLED
