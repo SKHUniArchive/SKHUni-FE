@@ -15,12 +15,16 @@ import { UserInfo, EnrollmentStatus, Field } from '@/types/users';
 import { ENROLLMENT_STATUS_OPTIONS, FIELD_OPTIONS } from '@/constants/options';
 import { useRouter } from 'next/navigation';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { uploadProfileImage } from '@/apis/images';
 
 export const EditProfileForm = () => {
   const [selectedStacks, setSelectedStacks] = useState<string[]>([]);
   const [userInfo, setUserInfo] = useState<UserInfo>();
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
   const router = useRouter();
 
   const fetchUserInfo = async () => {
@@ -60,8 +64,10 @@ export const EditProfileForm = () => {
     }
   }, [userInfo]);
 
+  // 수정 버튼
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (userInfo) {
       setIsSubmitLoading(true);
       const mergedUserInfo = {
@@ -69,7 +75,12 @@ export const EditProfileForm = () => {
         ...socialLinks,
       };
       try {
-        await updateUserInfo(mergedUserInfo);
+        // 이미지 업로드
+        if (selectedImageFile) {
+          await uploadProfileImage(selectedImageFile);
+        }
+
+        await updateUserInfo({ ...mergedUserInfo });
         setIsSubmitLoading(false);
         alert('프로필이 성공적으로 업데이트되었습니다.');
         router.push('/mypage');
@@ -80,6 +91,18 @@ export const EditProfileForm = () => {
     } else {
       console.error('User info is not available');
     }
+  };
+
+  // 프로필 수정 클릭 시 임시 변경
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setSelectedImageFile(file);
+    const render = new FileReader();
+    render.onload = () => {
+      setPreviewImage(render.result as string);
+    };
+    render.readAsDataURL(file);
   };
 
   return (
@@ -94,16 +117,27 @@ export const EditProfileForm = () => {
           <div className="flex justify-between">
             <div className="flex flex-col gap-6">
               <img
-                src={userInfo?.picture ?? '/assets/img/profile.png'}
+                src={previewImage ?? userInfo?.picture ?? '/assets/img/profile.png'}
                 alt="profile"
                 width={120}
                 height={120}
-                className="overflow-hidden rounded-full"
+                className="overflow-hidden rounded-full w-[120px] h-[120px] object-cover"
               />
-              <button className="flex gap-2 items-center h-6 bg-[#F5F5F5] rounded-md p-1 justify-center">
+
+              <label
+                htmlFor="profileImage"
+                className="flex gap-2 items-center h-6 bg-[#F5F5F5] rounded-md p-1 justify-center cursor-pointer"
+              >
                 <Image src="/assets/icons/folderImg.svg" alt="folderImg" width={16} height={16} />
                 <span className="text-xs text-gray-700">프로필 수정</span>
-              </button>
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                id="profileImage"
+                className="hidden"
+              />
             </div>
             <div className="flex flex-col gap-4 w-[450px]">
               <InputField
