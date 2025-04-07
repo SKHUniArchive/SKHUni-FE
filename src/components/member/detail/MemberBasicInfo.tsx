@@ -35,12 +35,33 @@ export default function MemberBasicInfo({ member }: { member: UserInfo }) {
     setIsOpen(false);
   };
 
+  const socialLinks = [
+    { key: 'github', label: 'Github', icon: '/assets/icons/github.svg', url: member.github },
+    {
+      key: 'linkedin',
+      label: 'LinkedIn',
+      icon: '/assets/icons/linkedin.svg',
+      url: member.linkedIn,
+    },
+    { key: 'notion', label: 'Notion', icon: '/assets/icons/notion.svg', url: member.notion },
+    { key: 'etc1', label: 'Etc1', icon: '/assets/icons/link.svg', url: member.etc1 },
+    { key: 'etc2', label: 'Etc2', icon: '/assets/icons/link.svg', url: member.etc2 },
+  ];
+
   return (
     <div className="flex gap-8 justify-between p-8 bg-white rounded-lg border border-gray-300">
       <div className="flex gap-8 items-center">
-        <img src={member.picture} alt="member-profile" className="w-24 h-24 rounded-full" />
         <div className="flex flex-col gap-4">
-          <div className="flex gap-2 items-center">
+          <img src={member.picture} alt="member-profile" className="w-32 h-32 rounded-full" />
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-2">
+            <AbleBadge able={member.coffeeChatOpen} type="coffee" />
+            <AbleBadge able={member.codeReviewOpen} type="code" />
+          </div>
+
+          <div className="flex gap-1 items-center">
             <h3 className="text-xl font-bold">{member.name}</h3>
             <span>·</span>
             <p className="text-sm text-gray-500">{FIELD_LABELS[member.fieldType] || '분야 미정'}</p>
@@ -61,9 +82,15 @@ export default function MemberBasicInfo({ member }: { member: UserInfo }) {
           <p className="text-sm text-gray-500 line-clamp-2">
             {member.introLine || '한줄소개가 없습니다'}
           </p>
-          <div className="flex gap-2">
-            <AbleBadge able={member.coffeeChatOpen} type="coffee" />
-            <AbleBadge able={member.codeReviewOpen} type="code" />
+
+          <div className="flex gap-3">
+            {socialLinks
+              .filter((link) => link.url?.trim())
+              .map((link) => (
+                <a key={link.key} href={link.url} target="_blank">
+                  <Image src={link.icon} alt={link.label} width={24} height={24} />
+                </a>
+              ))}
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import MemberBasicInfo from './MemberBasicInfo';
 import { MemberDetailTabs } from './MemberDetailTabs';
+import MemberStackInfo from './MemberStackInfo';
 export default function MemberDetailLayout() {
   const { id } = useParams();
   const [member, setMember] = useState<UserInfo | null>(null);
@@ -29,7 +30,11 @@ export default function MemberDetailLayout() {
 
   return (
     <section className="flex flex-col w-[60rem] justify-center mx-auto mt-8 gap-16">
-      <MemberBasicInfo member={member} />
+      <div className="flex flex-col gap-4">
+        <MemberBasicInfo member={member} />
+        <MemberStackInfo member={member} />
+      </div>
+
       <MemberDetailTabs member={member} />
     </section>
   );
