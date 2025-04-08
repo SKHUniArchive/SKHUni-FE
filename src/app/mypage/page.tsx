@@ -7,12 +7,16 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { MyProfile } from '@/components/mypage/MyProfile';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { getUserInfo } from '@/apis/members';
-import { MyProject } from '@/components/mypage/MyProject';
-
+import { getMyProjects } from '@/apis/projects';
+import { MyProjectCard } from '@/components/mypage/MyProjectCard';
+import { Project } from '@/types/projects';
+import { useRouter } from 'next/navigation';
 export default function MyPage() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(null);
+  const [projects, setProjects] = useState<Project[]>([]);
   const role = useAuthStore((state) => state.role);
   const { fetchRole } = useAuthStore();
 
@@ -26,6 +30,8 @@ export default function MyPage() {
         if (role === 'ROLE_STUDENT') {
           const response = await getUserInfo();
           setUserInfo(response.data);
+          const projectsResponse = await getMyProjects();
+          setProjects(projectsResponse.data.projects);
         }
       } catch (error) {
         console.error('데이터 로딩 중 오류 발생:', error);
@@ -76,11 +82,24 @@ export default function MyPage() {
                 </div>
                 <MyProfile userInfo={userInfo} />
                 <hr className="border-gray-300" />
-                <div className="flex flex-col gap-1">
-                  <h2 className="text-xl font-bold text-gray-900">나의 프로젝트</h2>
-                  <p className="text-sm text-gray-400">*해당 정보는 다른 사람에게 보입니다.</p>
+                <div className="flex justify-between">
+                  <div className="flex flex-col gap-1">
+                    <h2 className="text-xl font-bold text-gray-900">나의 프로젝트</h2>
+                    <p className="text-sm text-gray-400">*해당 정보는 다른 사람에게 보입니다.</p>
+                  </div>
+                  <button
+                    type="button"
+                    className="w-28 h-10 bg-[#512DA8] text-white rounded-lg text-sm px-2"
+                    onClick={() => router.push('/mypage/project/new')}
+                  >
+                    프로젝트 추가
+                  </button>
                 </div>
-                <MyProject />
+                <div className="flex flex-col gap-4">
+                  {projects.map((project) => (
+                    <MyProjectCard key={project.projectId} project={project} />
+                  ))}
+                </div>
               </div>
             )}
           </div>

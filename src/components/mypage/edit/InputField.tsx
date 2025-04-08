@@ -13,7 +13,7 @@ export const InputField = ({
   type,
   id,
   placeholder,
-  disabled,
+  disabled = false,
   value,
   onChange,
 }: InputFieldProps) => {
