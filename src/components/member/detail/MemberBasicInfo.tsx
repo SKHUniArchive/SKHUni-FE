@@ -69,7 +69,7 @@ export default function MemberBasicInfo({ member }: { member: UserInfo }) {
           <div className="flex flex-col gap-1">
             <div className="flex gap-2 items-center">
               <Image src="/assets/icons/mail.svg" alt="mail" width={16} height={17} />
-              <p className="text-sm leading-none text-gray-700">{member.email}</p>
+              <p className="text-sm leading-none text-gray-700">{member.contactEmail}</p>
             </div>
             <div className="flex gap-2 items-center">
               <Image src="/assets/icons/school.svg" alt="학번" width={16} height={16} />

@@ -2,11 +2,14 @@
 
 import { useState } from 'react';
 import { MemberIntroduction } from './MemberIntroduction';
+import { MemberProjects } from './MemberProjects';
 import { UserInfo } from '@/types/users';
+import { Project } from '@/types/projects';
 interface MemberDetailTabsProps {
   member: UserInfo;
+  projects: Project[] | null;
 }
-export const MemberDetailTabs = ({ member }: MemberDetailTabsProps) => {
+export const MemberDetailTabs = ({ member, projects }: MemberDetailTabsProps) => {
   const [selectedTab, setSelectedTab] = useState<'self-introduction' | 'project'>(
     'self-introduction'
   );
@@ -39,7 +42,7 @@ export const MemberDetailTabs = ({ member }: MemberDetailTabsProps) => {
       {selectedTab === 'self-introduction' && (
         <MemberIntroduction introduction={member.introduction} />
       )}
-      {selectedTab === 'project' && <div>프로젝트</div>}
+      {selectedTab === 'project' && <MemberProjects projects={projects} />}
     </div>
   );
 };

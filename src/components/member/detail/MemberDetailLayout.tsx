@@ -9,14 +9,18 @@ import { useState } from 'react';
 import MemberBasicInfo from './MemberBasicInfo';
 import { MemberDetailTabs } from './MemberDetailTabs';
 import MemberStackInfo from './MemberStackInfo';
+import { Project } from '@/types/projects';
+
 export default function MemberDetailLayout() {
   const { id } = useParams();
   const [member, setMember] = useState<UserInfo | null>(null);
+  const [projects, setProjects] = useState<Project[] | null>(null);
 
   useEffect(() => {
     const fetchMember = async () => {
       const response = await getMemberDetail(Number(id));
-      setMember(response.data);
+      setMember(response.data.members);
+      setProjects(response.data.projects.projects);
     };
     fetchMember();
   }, [id]);
@@ -35,7 +39,7 @@ export default function MemberDetailLayout() {
         <MemberStackInfo member={member} />
       </div>
 
-      <MemberDetailTabs member={member} />
+      <MemberDetailTabs member={member} projects={projects} />
     </section>
   );
 }
