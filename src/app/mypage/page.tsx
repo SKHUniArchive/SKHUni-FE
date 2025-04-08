@@ -7,6 +7,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { MyProfile } from '@/components/mypage/MyProfile';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { getUserInfo } from '@/apis/members';
+import { MyProject } from '@/components/mypage/MyProject';
 
 export default function MyPage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,13 +69,19 @@ export default function MyPage() {
               </div>
             )}
             {role === 'ROLE_STUDENT' && (
-              <>
+              <div className="flex flex-col gap-8">
                 <div className="flex flex-col gap-1">
                   <h2 className="text-xl font-bold text-gray-900">기본정보</h2>
                   <p className="text-sm text-gray-400">*해당 정보는 다른 사람에게 보입니다.</p>
                 </div>
                 <MyProfile userInfo={userInfo} />
-              </>
+                <hr className="border-gray-300" />
+                <div className="flex flex-col gap-1">
+                  <h2 className="text-xl font-bold text-gray-900">나의 프로젝트</h2>
+                  <p className="text-sm text-gray-400">*해당 정보는 다른 사람에게 보입니다.</p>
+                </div>
+                <MyProject />
+              </div>
             )}
           </div>
           {isOpen && (
