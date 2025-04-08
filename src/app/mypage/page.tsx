@@ -11,6 +11,7 @@ import { deleteProject, getMyProjects } from '@/apis/projects';
 import { MyProjectCard } from '@/components/mypage/MyProjectCard';
 import { Project } from '@/types/projects';
 import { useRouter } from 'next/navigation';
+
 export default function MyPage() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
