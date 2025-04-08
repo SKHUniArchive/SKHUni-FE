@@ -7,7 +7,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { MyProfile } from '@/components/mypage/MyProfile';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { getUserInfo } from '@/apis/members';
-import { getMyProjects } from '@/apis/projects';
+import { deleteProject, getMyProjects } from '@/apis/projects';
 import { MyProjectCard } from '@/components/mypage/MyProjectCard';
 import { Project } from '@/types/projects';
 import { useRouter } from 'next/navigation';
@@ -42,6 +42,15 @@ export default function MyPage() {
 
     fetchData();
   }, [fetchRole, role]);
+
+  const handleDeleteProject = async (projectId: number) => {
+    try {
+      await deleteProject(projectId);
+      setProjects(projects.filter((project) => project.projectId !== projectId));
+    } catch (error) {
+      console.error('프로젝트 삭제 실패:', error);
+    }
+  };
 
   return (
     <section className="flex flex-col w-[35rem] justify-center mx-auto mt-8 gap-8">
@@ -97,8 +106,15 @@ export default function MyPage() {
                 </div>
                 <div className="flex flex-col gap-4">
                   {projects.map((project) => (
-                    <MyProjectCard key={project.projectId} project={project} />
+                    <MyProjectCard
+                      key={project.projectId}
+                      project={project}
+                      onDelete={() => handleDeleteProject(project.projectId)}
+                    />
                   ))}
+                  {projects.length === 0 && (
+                    <p className="text-sm text-gray-400">등록된 프로젝트가 없습니다.</p>
+                  )}
                 </div>
               </div>
             )}

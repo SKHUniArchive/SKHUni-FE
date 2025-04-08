@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ProjectCreate } from '@/types/projects';
 import { InputField } from '../edit/InputField';
 import { MarkDownEditor } from '../edit/MarkDownEditor';
@@ -23,6 +23,19 @@ export default function ProjectForm({ initialData, onSubmit, isLoading }: Projec
   const [githubLink2, setGithubLink2] = useState(initialData?.githubLink2 ?? '');
   const [image, setImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (initialData) {
+      setTitle(initialData.title);
+      setIntroLine(initialData.introLine);
+      setIntroduction(initialData.introduction);
+      setSiteLink(initialData.siteLink);
+      setGithubLink1(initialData.githubLink1);
+      setGithubLink2(initialData.githubLink2);
+      setPreviewImage(initialData.picture);
+    }
+    console.log(initialData);
+  }, [initialData]);
 
   // 프로젝트 이미지 수정 시 임시 변경
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -20,3 +20,21 @@ export const imageUpload = async (multipartFile: File) => {
   const response = await instance.post('/api/projects/image/upload', formData);
   return response.data;
 };
+
+// projectId로 프로젝트 조회
+export const getProjectById = async (projectId: number) => {
+  const response = await instance.get(`/api/projects/${projectId}`);
+  return response.data;
+};
+
+// 프로젝트 수정
+export const updateProject = async (projectId: number, data: ProjectCreate) => {
+  const response = await instance.post(`/api/projects/${projectId}`, data);
+  return response.data;
+};
+
+// 프로젝트 삭제
+export const deleteProject = async (projectId: number) => {
+  const response = await instance.delete(`/api/projects/${projectId}`);
+  return response.data;
+};

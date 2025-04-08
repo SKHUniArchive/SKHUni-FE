@@ -30,7 +30,7 @@ export const InputField = ({
           disabled ? 'bg-gray-200' : ''
         }`}
         disabled={disabled}
-        value={value}
+        value={value || ''}
         onChange={onChange}
       />
     </div>
