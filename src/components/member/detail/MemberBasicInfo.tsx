@@ -57,8 +57,8 @@ export default function MemberBasicInfo({ member }: { member: UserInfo }) {
   ];
 
   return (
-    <div className="flex gap-8 justify-between p-8 bg-white rounded-lg border border-gray-300">
-      <div className="flex gap-8 items-center">
+    <div className="flex justify-between p-4 w-full bg-white rounded-lg border border-gray-300 md:w-auto md:gap-8 sm:px-8 sm:py-6">
+      <div className="flex flex-col gap-8 items-center w-full md:flex-row md:w-auto">
         <div className="flex flex-col gap-4">
           <img src={member.picture} alt="member-profile" className="w-32 h-32 rounded-full" />
         </div>
