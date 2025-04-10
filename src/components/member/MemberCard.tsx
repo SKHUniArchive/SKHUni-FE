@@ -16,7 +16,7 @@ export const MemberCard = ({ member }: MemberCardProps) => {
         width={100}
         height={100}
         style={{ width: '100px', height: '100px' }}
-        className="rounded-full"
+        className="object-cover rounded-full"
       />
       <div className="flex flex-col gap-2">
         <div className="flex gap-2 items-center">
