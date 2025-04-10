@@ -103,13 +103,16 @@ export default function MemberBasicInfo({ member }: { member: UserInfo }) {
         </div>
       </div>
       <div className="relative" ref={dropdownRef}>
-        <button
-          type="button"
-          className="relative w-24 h-10 bg-[#512DA8] text-white rounded-lg"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          Contact
-        </button>
+        {!member.isMine && (
+          <button
+            type="button"
+            className="relative w-24 h-10 bg-[#512DA8] text-white rounded-lg"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            Contact
+          </button>
+        )}
+
         {isOpen && (
           <ul className="absolute right-0 top-12 z-10 p-1 mt-1 w-40 bg-white rounded-lg border border-gray-300 shadow-sm">
             {['커피챗 요청', '코드리뷰 요청'].map((option) => {
