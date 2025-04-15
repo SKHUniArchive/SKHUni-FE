@@ -113,7 +113,7 @@ export default function MemberBasicInfo({ member }: { member: UserInfo }) {
           </div>
         </div>
       </div>
-      <div className="relative" ref={dropdownRef}>
+      <div className="relative mt-4 sm:mt-0" ref={dropdownRef}>
         {!member.isMine && (
           <button
             type="button"
