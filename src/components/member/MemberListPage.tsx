@@ -58,7 +58,14 @@ export const MemberListPage = () => {
       setIsLoading(false);
     };
     fetchMemberList();
-  }, [filters]);
+  }, [
+    filters.page,
+    filters.name,
+    filters.field,
+    filters.enrollmentStatus,
+    filters.coffeeChat,
+    filters.codeReview,
+  ]);
 
   // 페이지 변경 시 filters.page 업데이트
   const handlePageChange = (page: number) => {
